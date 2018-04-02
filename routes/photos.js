@@ -9,6 +9,8 @@ var Flickr = require("flickrapi"),
       secret: process.env.FLICKR_API_SECRET
     };
 
+console.log(flickrOptions.api_key);
+
 const pagesForKeyword = (keywordslist, setPageCount) => {
   Flickr.tokenOnly(flickrOptions, function(error, flickr) {
     // we can now use "flickr" as our API object,
