@@ -1,0 +1,28 @@
+{
+  "name": "depictr-api",
+  "version": "1.0.0",
+  "description": "Provides back-end JSON data services for the depictr app.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mike Harper",
+  "license": "ISC",
+  "engines": {
+    "node": "6.9.4"
+  },
+  "dependencies": {
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "ejs": "^2.5.8",
+    "express": "~4.15.5",
+    "flickrapi": "^0.6.0",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.0",
+    "retinasdk": "^1.0.7",
+    "serve-favicon": "~2.4.5",
+    "stopword": "^0.1.9"
+  }
+}
