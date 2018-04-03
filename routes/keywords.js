@@ -11,13 +11,11 @@ router.get('/:lyric', function(req, res, next) {
     const liteClient = retinaSDK.LiteClient(process.env.RETINA_API_KEY);
 
     var interestingLyric = stopWords.removeStopwords(req.params.lyric.split(' '));
-    console.log('interestingLyric ' + interestingLyric.join(' '));
 
     keywords = liteClient.getKeywords(interestingLyric.join(' '));
-    console.log('keywords ' + keywords.join(','));
   }
   catch(e) {
-    keywords = ['fire'];
+    keywords = [];
   }
   return res.json(keywords);
 });

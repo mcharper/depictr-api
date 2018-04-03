@@ -9,8 +9,6 @@ var Flickr = require("flickrapi"),
       secret: process.env.FLICKR_API_SECRET
     };
 
-console.log(flickrOptions.api_key);
-
 const pagesForKeyword = (keywordslist, setPageCount) => {
   Flickr.tokenOnly(flickrOptions, function(error, flickr) {
     // we can now use "flickr" as our API object,
@@ -21,9 +19,7 @@ const pagesForKeyword = (keywordslist, setPageCount) => {
         per_page: 100,
         safe_search : 2, // 1 is safest, 2 is moderate
         content_type: 1, // Photos only
-        // is_commons: true, // No restrictions
-        // sort: 'interestingness-desc',
-        sort: 'relevance',
+        sort: 'interestingness-desc',
         orientation: 'landscape,square'
       }, function(err, result) {
         if(err) { throw new Error(err); }
@@ -42,7 +38,6 @@ router.get('/:keywordslist', function(req, res, next) {
       var pageCount = 1;
       pagesForKeyword(req.params.keywordslist, (c) => {
           pageCount = c;
-          console.log(pageCount);
 
           flickr.photos.search({
             // text: req.params.keywordslist[0] + req.params.keywordslist[1] + req.params.keywordslist[2],
@@ -51,9 +46,7 @@ router.get('/:keywordslist', function(req, res, next) {
             per_page: 100,
             safe_search : 2, // 1 is safest, 2 is moderate
             content_type: 1, // Photos only
-            // is_commons: true, // No restrictions
-            // sort: 'interestingness-desc',
-            sort: 'relevance',
+            sort: 'interestingness-desc',
             orientation: 'landscape,square'
           }, function(err, result) {
             // pageCount = result.photos.pages;
@@ -66,9 +59,6 @@ router.get('/:keywordslist', function(req, res, next) {
               photos.push({ url: `http://farm${p.farm}.staticflickr.com/${p.server}/${p.id}_${p.secret}.jpg`, key: i });
             };
             
-            // var photos = result.photos.photo.map((p) => {
-            //     return { url: `http://farm${p.farm}.staticflickr.com/${p.server}/${p.id}_${p.secret}.jpg` }
-            // });
             return res.json(photos);
           });
 
