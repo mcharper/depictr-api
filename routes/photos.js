@@ -17,7 +17,7 @@ const pagesForKeyword = (keywordslist, setPageCount) => {
         tags: keywordslist.replace(' ', ','),
         page: 1,
         per_page: 100,
-        safe_search : 2, // 1 is safest, 2 is moderate
+        safe_search : 1, // 1 is safest, 2 is moderate
         content_type: 1, // Photos only
         sort: 'interestingness-desc',
         orientation: 'landscape,square'
@@ -40,7 +40,7 @@ router.get('/:keywordslist', function(req, res, next) {
           pageCount = c;
 
           flickr.photos.search({
-            // text: req.params.keywordslist[0] + req.params.keywordslist[1] + req.params.keywordslist[2],
+            text: req.params.keywordslist[0] + req.params.keywordslist[1] + req.params.keywordslist[2],
             tags: req.params.keywordslist.replace(' ', ','),
             page: getRandomInt(1, pageCount),
             per_page: 100,
