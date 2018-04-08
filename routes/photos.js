@@ -54,9 +54,18 @@ router.get('/:keywordslist', function(req, res, next) {
             var photos = [];
 
             for(var i=0; i < 9; i++) {
-              var j = getRandomInt(1, 100);
+              var j = getRandomInt(1, 20);
               var p = result.photos.photo[j - 1];
-              photos.push({ url: `http://farm${p.farm}.staticflickr.com/${p.server}/${p.id}_${p.secret}.jpg`, key: i });
+              if(p) {
+                  photos.push({ 
+                    url: `https://farm${p.farm}.staticflickr.com/${p.server}/${p.id}_${p.secret}.jpg`, 
+                    key: i, 
+                    owner: 
+                    p.owner, 
+                    id: p.id, 
+                    link: `https://www.flickr.com/photos/${p.owner}/${p.id}`
+                });
+              }
             };
             
             return res.json(photos);
