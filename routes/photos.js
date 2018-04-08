@@ -9,25 +9,41 @@ var Flickr = require("flickrapi"),
       secret: process.env.FLICKR_API_SECRET
     };
 
-const pagesForKeyword = (keywordslist, setPageCount) => {
+const SEARCH_SAFE = 1;
+const SEARCH_MODERATE = 2;
+const SEARCH_UNFILTERED = 3;
+
+const CONTENT_PHOTOS = 1;
+
+const MAX_PHOTOS_TO_RETURN = 20;
+const RETRIEVAL_BATCH_SIZE = 100;
+
+const countPhotosAvailableForKeywords = (tagList, retrievalCallBack) => {
   Flickr.tokenOnly(flickrOptions, function(error, flickr) {
     // we can now use "flickr" as our API object,
     {
       flickr.photos.search({
-        tags: keywordslist.replace(' ', ','),
+        tags: tagList,
         page: 1,
-        per_page: 100,
-        safe_search : 1, // 1 is safest, 2 is moderate
-        content_type: 1, // Photos only
+        per_page: 1,
+        safe_search: SEARCH_MODERATE,
+        content_type: CONTENT_PHOTOS,
         sort: 'interestingness-desc',
-        orientation: 'landscape,square'
       }, function(err, result) {
         if(err) { throw new Error(err); }
-        setPageCount(result.photos.pages);
+        retrievalCallBack(result.photos.pages);
+        console.log(`Photos available ${result.photos.pages}`);
       });
     };
   });
 };
+
+const getRandomInt = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  //The maximum is exclusive and the minimum is inclusive
+  return Math.floor(Math.random() * (max - min)) + min; 
+}
 
 /* GET photos from Flickr. */
 router.get('/:keywordslist', function(req, res, next) {
@@ -35,27 +51,22 @@ router.get('/:keywordslist', function(req, res, next) {
     // we can now use "flickr" as our API object,
     // but we can only call public methods and access public data
 
-      var pageCount = 1;
-      pagesForKeyword(req.params.keywordslist, (c) => {
-          pageCount = c;
+      var tagList = req.params.keywordslist.replace(' ', ',');
 
+      countPhotosAvailableForKeywords(tagList, (photoCount) => {
           flickr.photos.search({
-            text: req.params.keywordslist[0] + req.params.keywordslist[1] + req.params.keywordslist[2],
-            tags: req.params.keywordslist.replace(' ', ','),
-            page: getRandomInt(1, pageCount),
-            per_page: 100,
-            safe_search : 2, // 1 is safest, 2 is moderate
-            content_type: 1, // Photos only
+            tags: tagList,
+            per_page: photoCount % RETRIEVAL_BATCH_SIZE,
+            safe_search : SEARCH_MODERATE,
+            content_type: CONTENT_PHOTOS,
             sort: 'interestingness-desc',
-            orientation: 'landscape,square'
           }, function(err, result) {
-            // pageCount = result.photos.pages;
             if(err) { throw new Error(err); }
             var photos = [];
 
-            for(var i=0; i < 9; i++) {
-              var j = getRandomInt(1, 20);
-              var p = result.photos.photo[j - 1];
+            for(var i=0; i < MAX_PHOTOS_TO_RETURN; i++) {
+              var j = getRandomInt(1, photoCount % RETRIEVAL_BATCH_SIZE) - 1;
+              var p = result.photos.photo[j];
               if(p) {
                   photos.push({ 
                     url: `https://farm${p.farm}.staticflickr.com/${p.server}/${p.id}_${p.secret}.jpg`, 
@@ -76,11 +87,5 @@ router.get('/:keywordslist', function(req, res, next) {
   });
 
 });
-
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-}
 
 module.exports = router;
