@@ -8,7 +8,7 @@ heroku login
 heroku local web to run it locally
 
 Uses Retina API to analyse text to extract keywords.
-You'll need an API for this.
+You'll need an API key for this.
 
 Add it as an environment variable to .env:
 
