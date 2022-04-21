@@ -15,6 +15,7 @@ router.get('/:lyric', function(req, res, next) {
     keywords = liteClient.getKeywords(interestingLyric.join(' '));
   }
   catch(e) {
+    console.log("Error extracting keywords", e)
     keywords = [];
   }
   return res.json(keywords);
