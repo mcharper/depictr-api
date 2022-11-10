@@ -1,12 +1,6 @@
 # depictr-api
 API to support the Depictr app, which takes lyrics or prose as input and retrieves relevant photos.
 
-Hosted on Heroku. Download heroku CLI.
-
-heroku login
-
-heroku local web to run it locally
-
 Uses Retina API to analyse text to extract keywords.
 You'll need an API key for this.
 
@@ -30,6 +24,3 @@ FLICKR_API_KEY=yourkey
 etc
 
 and then npm start.
-
-
-
