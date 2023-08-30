@@ -1,20 +1,25 @@
+require('dotenv').config();
 var express = require('express');
-var stopWords = require('stopword');
-var retinaSDK = require('retinasdk');
+const keyword_extractor = require("keyword-extractor");
 
 var router = express.Router();
 
 /* GET keywords */
-router.get('/:lyric', function(req, res, next) {
-  var keywords = [];
+router.get('/:lyric', function (req, res, next) {
+  var keywords;
+
   try {
-    const liteClient = retinaSDK.LiteClient(process.env.RETINA_API_KEY);
+    const extraction_result =
+      keyword_extractor.extract(req.params.lyric, {
+        language: "english",
+        remove_digits: true,
+        return_changed_case: true,
+        remove_duplicates: true
+      });
 
-    var interestingLyric = stopWords.removeStopwords(req.params.lyric.split(' '));
-
-    keywords = liteClient.getKeywords(interestingLyric.join(' '));
+    keywords = extraction_result;
   }
-  catch(e) {
+  catch (e) {
     console.log("Error extracting keywords", e)
     keywords = [];
   }

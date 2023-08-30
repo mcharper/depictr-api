@@ -1,6 +1,6 @@
 {
   "name": "depictr-api",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Provides back-end JSON data services for the depictr app.",
   "main": "index.js",
   "scripts": {
@@ -16,13 +16,15 @@
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
+    "dotenv": "^16.3.1",
     "ejs": "^2.5.8",
     "express": "~4.15.5",
+    "flickr-sdk": "^6.2.1",
     "flickrapi": "^0.6.0",
     "jade": "~1.11.0",
+    "keyword-extractor": "^0.0.25",
     "morgan": "~1.9.0",
-    "retinasdk": "^1.0.7",
-    "serve-favicon": "~2.4.5",
-    "stopword": "^0.1.9"
+    "sentiment": "^5.0.2",
+    "serve-favicon": "~2.4.5"
   }
 }
