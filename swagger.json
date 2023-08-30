@@ -1,0 +1,137 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Depictr API",
+    "version": "2.0"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/keywords/{lyric}": {
+      "get": {
+        "summary": "Returns a list of keywords extracted from the lyric",
+        "parameters": [
+          {
+              "name": "lyric",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "format": "string"
+          }
+        ],        
+        "responses": {
+          "200": {
+            "description": "List of keywords extracted from the lyric",
+            "schema": {
+              "$ref": "#/definitions/KeywordsResponse"
+            }
+          }
+        }
+      }
+    },    
+    "/photos/{keywords}": {
+      "get": {
+        "summary": "Returns a list of photos relevant to the keywords",
+        "parameters": [
+          {
+              "name": "keywords",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "format": "string"            
+          }
+        ],        
+        "responses": {
+          "200": {
+            "description": "List of photos associated with the keywords",
+            "schema": {
+              "$ref": "#/definitions/PhotosResponse"
+            }
+          }
+        }
+      }
+    },
+    "/sentiment/{lyric}": {
+      "get": {
+        "summary": "Returns a sentiment analysis of the lyric",
+        "parameters": [
+          {
+              "name": "lyric",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "format": "string"
+          }
+        ],        
+        "responses": {
+          "200": {
+            "description": "Sentiment analysis of the lyric",
+            "schema": {
+              "$ref": "#/definitions/SentimentResponse"
+            }
+          }
+        }
+      }
+    }    
+  },
+  "definitions": {
+    "PhotosResponse": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Photo"
+      },
+      "description": "A list of photos"
+    },
+    "KeywordsResponse": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Keyword"
+      },
+      "description": "A list of keywords"
+    },
+    "SentimentResponse": {
+      "type": "string",
+      "format": "string",
+      "description": "A number representing the sentiment, -ve is bad, +ve is good"
+    },
+    "Photo": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "string"
+        },
+        "key": {
+          "type": "string",
+          "format": "string"
+        },
+        "owner": {
+          "type": "string",
+          "format": "string"
+        },
+        "id": {
+          "type": "string",
+          "format": "string"
+        },
+        "link": {
+          "type": "string",
+          "format": "string"
+        }
+      },
+      "description": "Details about a Flickr photo"
+    },
+    "Keyword": {
+      "type": "string",
+      "format": "string",
+      "description": "A keyword string"
+    }
+  }
+}

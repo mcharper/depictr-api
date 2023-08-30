@@ -16,3 +16,8 @@ To run locally, if you're running bash:
 
 `npm start`
 
+If you have nodemon installed globally, just run it:
+
+`nodemon`
+
+
