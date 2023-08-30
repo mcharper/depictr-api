@@ -20,10 +20,9 @@
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "flickr-sdk": "^6.2.1",
-    "flickrapi": "^0.6.0",
-    "jade": "^1.9.2",
     "keyword-extractor": "^0.0.25",
     "morgan": "~1.9.0",
+    "pug": "^3.0.2",
     "sentiment": "^5.0.2",
     "serve-favicon": "~2.4.5",
     "swagger-ui-express": "^5.0.0"
