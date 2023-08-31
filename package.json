@@ -10,7 +10,7 @@
   "author": "Mike Harper",
   "license": "ISC",
   "engines": {
-    "node": "6.9.4"
+    "node": "16.15.0"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
