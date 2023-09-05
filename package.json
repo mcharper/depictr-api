@@ -25,6 +25,7 @@
     "pug": "^3.0.2",
     "sentiment": "^5.0.2",
     "serve-favicon": "~2.4.5",
-    "swagger-ui-express": "^5.0.0"
+    "swagger-ui-express": "^5.0.0",
+    "validator": "^13.11.0"
   }
 }

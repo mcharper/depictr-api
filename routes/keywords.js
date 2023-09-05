@@ -1,6 +1,7 @@
 require('dotenv').config();
 var express = require('express');
 const keyword_extractor = require("keyword-extractor");
+var textValidator = require('../textValidator');
 
 var router = express.Router();
 
@@ -8,7 +9,10 @@ var router = express.Router();
 router.get('/:lyric', function (req, res, next) {
   var keywords;
 
-  try {
+  if (!textValidator(req.params.lyric)) {
+    res.status(422);
+    res.send("The lyric must be 500 characters or less and contain only English text");
+  } else {
     const extraction_result =
       keyword_extractor.extract(req.params.lyric, {
         language: "english",
@@ -18,12 +22,9 @@ router.get('/:lyric', function (req, res, next) {
       });
 
     keywords = extraction_result;
-  }
-  catch (e) {
-    console.log("Error extracting keywords", e)
-    keywords = [];
-  }
-  return res.json(keywords);
+
+    res.json(keywords);
+  };
 });
 
 module.exports = router;
