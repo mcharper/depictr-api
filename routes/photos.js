@@ -14,7 +14,7 @@ const SEARCH_UNFILTERED = 3;
 
 const CONTENT_PHOTOS = 0;
 
-const DefaultBatchSize = 25;
+const DefaultBatchSize = 9;
 
 const countPhotosAvailableForKeywords = async (tagList) => {
   let result = {};
